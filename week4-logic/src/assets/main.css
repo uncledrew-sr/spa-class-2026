@@ -1,10 +1,16 @@
 @import './base.css';
 
 #app {
-  max-width: 1920px;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 2rem;
+  /* padding: 2rem */
   font-weight: normal;
+}
+
+body {
+  margin: 0;
+  display: block; /* 가로 정렬 방해 제거 */
+  background-color: #f8f9fa;
 }
 
 a,

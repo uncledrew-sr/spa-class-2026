@@ -2,15 +2,18 @@
 import { ref } from 'vue';
 
 // 검색 관련 상태 변수
-const searchInput = ref(''); // 사용자가 입력 중인 글자
-const searchKeyword = ref(''); // 엔터를 쳤을 때 확정된 검색어
-const currentTab = ref('전체') // 현재 선택된 탭
+const searchInput = ref('');
+// HTML <input v-model="searchInput">과 연결, 사용자가 검색창에 타이핑하는 매 순간의 글자를 실시간으로 담기
+const searchKeyword = ref('');
+// @keyup.enter="searchKeyword = searchInput" 로직을 통해 업데이트, 엔터를 치고 검색을 눌렀을 때 실제 검색 결과에 반영될 최종 단어
+const currentTab = ref('전체')
+// 초기값이 '전체'이므로 처음 접속 시 모든 영화가 보임
 
-// 모달창 상태 변수
-const isModalOpen = ref(false);
-const selectedMovie = ref(null);
+// 모달창(상세보기) 상태 변수
+const isModalOpen = ref(false); // true: 모달이 화면에 나타남, false: 모달이 사라짐(기본값)
+const selectedMovie = ref(null); // null: 선택되지 않음(기본값), 어떤 영화의 상세보기 버튼을 눌렀는지 저장
 
-// 영화 배열 데이터 (placeholder.co 이미지와 평점 포함)
+// 영화 배열 데이터
 const movies = ref([
   { id: 1, title: '다크 나이트', genre: '액션', rating: 9.5, poster: 'https://placehold.co/150x220/222222/FFFFFF?text=Dark+Knight' },
   { id: 2, title: '인터스텔라', genre: 'SF', rating: 8.6, poster: 'https://placehold.co/150x220/000080/FFFFFF?text=Interstellar' },
@@ -19,20 +22,22 @@ const movies = ref([
   { id: 5, title: '라라랜드', genre: '로맨스', rating: 6.8, poster: 'https://placehold.co/150x220/FFFF00/000000?text=La+La+Land' }
 ]);
 
-// 모달창 열기 함수
+// 모달창(상세보기) 열기 함수
 const openModal = (movie) => {
-  selectedMovie.value = movie;
-  isModalOpen.value = true;
+  selectedMovie.value = movie; // 1. 어떤 영화인지 저장
+  isModalOpen.value = true; // 2. 모달창 변수를 true로 바꾸기
 };
 
+// 데이터 삭제
 const deleteMovie = (targetId) => {
-  movies.value = movies.value.filter(movie => movie.id !== targetId);
-  isModalOpen.value = false;
+  movies.value = movies.value.filter(movie => movie.id !== targetId); // targetId와 일치하지 않는 영화들만 골라내어 새 배열을 만듦
+  isModalOpen.value = false; // 삭제 후에는 모달창 닫기
 }
 </script>
 
 <template>
   <div class="container">
+
     <h1>🎬 영화 데이터베이스</h1>
     
     <div class="search-area">
@@ -40,7 +45,7 @@ const deleteMovie = (targetId) => {
         type="text"
         v-model="searchInput"
         @keyup.enter="searchKeyword = searchInput"
-        placeholder="영화 제목 검색 후 엔터"
+        placeholder="영화 제목 검색 후 Enter"
       />
       <button @click="searchKeyword = searchInput">검색</button>
     </div>
@@ -93,7 +98,13 @@ const deleteMovie = (targetId) => {
 
 <style scoped>
 /* 전체 레이아웃 */
-.container { max-width: 900px; margin: 0 auto; padding: 20px; text-align: center; font-family: sans-serif; }
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+  font-family: sans-serif;
+}
 
 /* 검색창 스타일 */
 .search-area input { padding: 10px; width: 260px; border: 1px solid #ccc; border-radius: 6px; margin-right: 8px; font-size: 15px; }
@@ -101,7 +112,7 @@ const deleteMovie = (targetId) => {
 
 /* 탭 메뉴 스타일 */
 .tabs button { padding: 10px 20px; border: 1px solid #ddd; background: #f9f9f9; cursor: pointer; border-radius: 8px; transition: 0.2s; font-size: 15px; }
-.tabs button.active { background: #4bb633; color: white; border-color: #422883; font-weight: bold; }
+.tabs button.active { background: #4bb633; color: white; border-color: #4bb633; font-weight: bold; }
 
 /* 그리드 및 카드 스타일 */
 .movie-grid { display: flex; flex-wrap: wrap; gap: 30px; justify-content: center; }
