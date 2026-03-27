@@ -101,7 +101,7 @@ const deleteMovie = (targetId) => {
 
 /* 탭 메뉴 스타일 */
 .tabs button { padding: 10px 20px; border: 1px solid #ddd; background: #f9f9f9; cursor: pointer; border-radius: 8px; transition: 0.2s; font-size: 15px; }
-.tabs button.active { background: #422883; color: white; border-color: #422883; font-weight: bold; }
+.tabs button.active { background: #4bb633; color: white; border-color: #422883; font-weight: bold; }
 
 /* 그리드 및 카드 스타일 */
 .movie-grid { display: flex; flex-wrap: wrap; gap: 30px; justify-content: center; }
