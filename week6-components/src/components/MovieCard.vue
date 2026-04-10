@@ -130,11 +130,11 @@ defineProps({
 }
 
 .hot {
-  background: #f4f757;
+  background: #fa0000;
 }
 
 .new {
-  background: #2f3542;
+  background: #2bff00;
 }
 
 h3 {
